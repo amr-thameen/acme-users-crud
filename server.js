@@ -5,6 +5,9 @@ const app = express()
 const path = require('path')
 const port = 3000 || process.env.PORT
 
+
+app.use(require('body-parser').json());
+
 app.listen(port, ()=>{
     console.log(`I am listening to port ${port}`)
 })
@@ -27,6 +30,19 @@ app.delete('/api/users/:id',(req, res, next)=>{
         }
     })
 })
+
+app.post('/api/users', (req, res, next)=>{
+    User.create(req.body)
+    .then((user)=>res.send(user))
+    .catch(next)
+})
+
+app.put(`/api/users/:id`), (req, res, next) => {
+    User.findById(req.params.id)
+    .then((user)=> user.update(req.body))
+    .then( user => res.send(user))
+    .catch(next);
+}
 
 app.get('/api/users/:id', (req, res, next) => {
     User.findById(req.params.id)
