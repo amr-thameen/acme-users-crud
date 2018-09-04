@@ -5,7 +5,6 @@ class UserCreate extends Component{
         super()
         this.state = {
             name : '',
-            error: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -22,7 +21,8 @@ class UserCreate extends Component{
     }
 
     render(){
-        console.log(this.state.error)
+        const errorMessage = this.props.errorMessage
+        console.log(errorMessage)
         return(
             <div>
                 <h3>Create A User</h3>
@@ -31,7 +31,7 @@ class UserCreate extends Component{
                     <div>
                     <input type="tex" value={this.state.user} onChange={this.handleChange}/>
                     <button className="btn btn-success" disabled={!this.state.name}>Create</button>
-                    {this.state.error? <div className="alert alert-danger"> <strong>User already exists!</strong> </div> : null}
+                    {errorMessage && this.state.name &&  <div className="alert alert-danger">{errorMessage}</div> }
                     </div>
                 </form>
             </div>

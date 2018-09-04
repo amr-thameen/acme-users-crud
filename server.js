@@ -37,12 +37,12 @@ app.post('/api/users', (req, res, next)=>{
     .catch(next)
 })
 
-app.put(`/api/users/:id`), (req, res, next) => {
+app.put(`/api/users/:id`, (req, res, next) => {
     User.findById(req.params.id)
-    .then((user)=> user.update(req.body))
-    .then( user => res.send(user))
+    .then( user => user.update(req.body))
+    .then( userUpdated => res.send(userUpdated))
     .catch(next);
-}
+})
 
 app.get('/api/users/:id', (req, res, next) => {
     User.findById(req.params.id)

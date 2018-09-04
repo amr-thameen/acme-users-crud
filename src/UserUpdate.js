@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios'
 
 class UserUpdate extends Component {
     constructor(){
@@ -9,13 +8,8 @@ class UserUpdate extends Component {
         }
         this.handleUpdate = this.handleUpdate.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.fetchUser = this.fetchUser.bind(this)
     }
 
-    fetchUser(id){
-        this.props.fetchUser(id)
-          .then( user => this.setState({ name: user.name }));
-      }
     
     handleChange(ev){
         this.setState({name: ev.target.value})
@@ -23,15 +17,10 @@ class UserUpdate extends Component {
 
     handleUpdate(ev){
         ev.preventDefault()
-        this.props.updateUser({name: this.state.name})
+        this.props.updateUser(this.state, this.props.id)
         .catch((err) => console.log(err))
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps.id !== this.props.id){
-          this.fetchUser(this.props.id);
-        }
-      }
 
     render(){
         return (
@@ -42,7 +31,6 @@ class UserUpdate extends Component {
                 <div>
                 <input type="tex" value={this.state.name} onChange={this.handleChange}/>
                 <button className="btn btn-success" disabled={!this.state.name}>Update</button>
-                {this.state.error? <div className="alert alert-danger"> <strong>User already exists!</strong> </div> : null}
                 </div>
             </form>
         </div>
